@@ -1,0 +1,193 @@
+@import url("./styles/default.css");
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  /* Layout & Backgrounds */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+
+  /* Brand Colors */
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+
+  /* Wireframes */
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Font Definitions */
+  --font-ibm: "IBM Plex Mono", monospace;
+  --font-jetbrains: "JetBrains Mono Variable", monospace;
+
+  /* Utility Mappings */
+  --font-sans: var(--font-ibm);
+  --font-mono: var(--font-ibm); /* .font-mono uses IBM Plex */
+  --font-display: var(--font-jetbrains); /* .font-display uses JetBrains */
+
+  --radius-lg: var(--radius);
+
+  /* Tactical Shadows */
+  --shadow-glow: 0px 0px 15px -3px var(--primary);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+}
+
+/* --- 3. GLOBAL BASE STYLES --- */
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  *::before,
+  *::after {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-background text-foreground transition-colors duration-500;
+    /* IBM Plex Mono is our industrial "System" font */
+    font-family: var(--font-ibm);
+    min-width: 320px;
+    min-height: 100vh;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  #root {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  /* --- HEADER & TITLE OVERRIDES --- */
+  h1,
+  h2,
+  h3,
+  .font-display {
+    /* JetBrains Mono handles the branding/titles */
+    font-family: var(--font-jetbrains) !important;
+    font-weight: 400;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+  }
+
+  /* Selection Logic */
+  ::selection {
+    @apply bg-primary/30 text-primary-foreground;
+  }
+}
+
+/* --- 4. TUI CURSOR LOGIC --- */
+/* Removed custom cursor overrides so the browser default cursor is used. */
+
+/* --- 5. TUI UTILITIES --- */
+.text-metadata {
+  @apply font-mono text-[7px] tracking-[0.3em] uppercase opacity-40;
+}
+
+/* --- 6. CODE BLOCK STYLES FOR MARKDOWN --- */
+/* Fix double code block boxes - style only the code inside pre */
+.prose pre {
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  background: transparent !important;
+}
+
+.prose pre code {
+  display: block !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 1rem !important;
+  border: 1px solid var(--color-border) !important;
+  border-radius: 0.5rem !important;
+  background-color: var(--color-card) !important;
+  font-family: var(--font-mono) !important;
+  font-size: 0.875rem !important;
+}
+
+.prose code:not(pre code) {
+  border-radius: 0.25rem !important;
+  padding: 0.25rem 0.5rem !important;
+  background-color: var(--color-muted) !important;
+  font-family: var(--font-mono) !important;
+  font-size: 0.875rem !important;
+  color: oklch(0.15 0.02 240) !important;
+}
+
+.dark .prose pre code {
+  background-color: oklch(0.18 0.02 260) !important;
+  border-color: oklch(0.35 0.03 180 / 0.4) !important;
+}
+
+.dark .prose code:not(pre code) {
+  background-color: oklch(0.2 0.02 260) !important;
+  color: oklch(0.95 0.02 180) !important;
+}
+
+/* --- THEMED NATIVE CONTROLS --- */
+.themed-dropdown {
+  color-scheme: light;
+}
+
+.themed-dropdown option {
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+.dark .themed-dropdown {
+  color-scheme: dark;
+}
+
+/* --- SCHEDULE X THEME BRIDGE --- */
+.sx__calendar-wrapper {
+  --sx-color-primary: var(--primary) !important;
+  --sx-color-on-primary: var(--primary-foreground) !important;
+  --sx-color-primary-container: var(--accent) !important;
+  --sx-color-on-primary-container: var(--accent-foreground) !important;
+  --sx-color-secondary: var(--secondary) !important;
+  --sx-color-on-secondary: var(--secondary-foreground) !important;
+  --sx-color-secondary-container: var(--muted) !important;
+  --sx-color-on-secondary-container: var(--muted-foreground) !important;
+  --sx-color-tertiary: var(--accent) !important;
+  --sx-color-on-tertiary: var(--accent-foreground) !important;
+  --sx-color-tertiary-container: var(--accent) !important;
+  --sx-color-on-tertiary-container: var(--accent-foreground) !important;
+  --sx-color-surface: var(--card) !important;
+  --sx-color-surface-dim: var(--background) !important;
+  --sx-color-surface-bright: var(--card) !important;
+  --sx-color-on-surface: var(--card-foreground) !important;
+  --sx-color-surface-container: var(--muted) !important;
+  --sx-color-surface-container-low: var(--background) !important;
+  --sx-color-surface-container-high: var(--secondary) !important;
+  --sx-color-background: var(--background) !important;
+  --sx-color-on-background: var(--foreground) !important;
+  --sx-color-outline: var(--border) !important;
+  --sx-color-outline-variant: var(--border) !important;
+  --sx-color-shadow: var(--foreground) !important;
+  --sx-color-surface-tint: var(--primary) !important;
+  --sx-color-neutral: var(--border) !important;
+  --sx-color-neutral-variant: var(--border) !important;
+  --sx-internal-color-text: var(--foreground) !important;
+  font-family: var(--font-ibm);
+}
